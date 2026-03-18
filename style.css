@@ -4,7 +4,7 @@ body { font-family: 'Pretendard', sans-serif; background-color: #f7f8fa; display
 .day-btn { padding: 12px 5px; border: none; background: #edf2f7; border-radius: 12px; cursor: pointer; font-size: 0.85rem; }
 .game-header { display: flex; justify-content: space-between; margin-bottom: 25px; font-weight: bold; color: #ff4b4b; }
 
-/* 카드 그리드 정렬 수정 */
+/* 카드 그리드 정렬 (2열 고정) */
 .card-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
