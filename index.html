@@ -16,7 +16,7 @@
 
         <section id="menu-screen" style="display: none;">
             <h2 id="welcome-msg"></h2>
-            <p>학습할 Day를 선택하세요:</p>
+            <p>Day를 선택하세요:</p>
             <div id="day-grid" class="day-grid"></div>
         </section>
 
@@ -34,12 +34,12 @@
                 <div id="choice-container" class="choice-grid"></div>
                 <div id="input-container" style="display: none;">
                     <input type="text" id="answerInput" placeholder="정답을 입력하세요">
-                    <button onclick="checkSubjective()" class="submit-btn">확인 (Enter)</button>
+                    <button id="submit-btn" class="submit-btn">확인 (Enter)</button>
                 </div>
             </div>
 
             <div id="matching-area" style="display: none;">
-                <h3 id="matching-title" style="margin-bottom: 20px;">알맞은 짝을 찾으세요!</h3>
+                <h3 id="matching-title">보너스 매칭</h3>
                 <div id="card-grid" class="card-grid"></div>
             </div>
         </section>
