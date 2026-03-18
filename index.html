@@ -9,9 +9,9 @@
 <body>
     <div class="container">
         <section id="login-screen">
-            <h1>🦉 영단어 퀴즈</h1>
+            <h1>🦉 영단어 학습</h1>
             <input type="text" id="userNameInput" placeholder="이름을 입력하세요" autofocus>
-            <button onclick="saveUser()" class="main-btn">시작하기</button>
+            <button onclick="saveUser()" class="main-btn">학습 시작</button>
         </section>
 
         <section id="menu-screen" style="display: none;">
@@ -29,7 +29,7 @@
             <div id="quiz-area">
                 <div class="question-box">
                     <h2 id="question-word">Word</h2>
-                    <p id="hint-text" style="color: #aaa; min-height: 1.2em;"></p>
+                    <p id="hint-text" style="color: #aaa; min-height: 1.2em; margin: 10px 0;"></p>
                 </div>
                 <div id="choice-container" class="choice-grid"></div>
                 <div id="input-container" style="display: none;">
@@ -39,7 +39,7 @@
             </div>
 
             <div id="matching-area" style="display: none;">
-                <h3 style="margin-bottom: 20px;">알맞은 짝을 찾으세요!</h3>
+                <h3 style="margin-bottom: 20px;">알맞은 짝을 모두 찾으세요!</h3>
                 <div id="card-grid" class="card-grid"></div>
             </div>
         </section>
