@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영단어 마스터 게임</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <section id="login-screen">
+            <h1>📝 단어 퀴즈 시작</h1>
+            <p>이름을 입력하고 학습을 시작하세요!</p>
+            <input type="text" id="userNameInput" placeholder="이름을 입력하세요" autofocus>
+            <button onclick="saveUser()" class="main-btn">입력 완료</button>
+        </section>
+
+        <section id="menu-screen" style="display: none;">
+            <h2 id="welcome-msg"></h2>
+            <p>학습할 Day를 선택하세요:</p>
+            <div id="day-grid" class="day-grid">
+                </div>
+        </section>
+
+        <section id="game-screen" style="display: none;">
+            <div class="game-header">
+                <span id="timer">시간: 60</span>
+                <span id="game-progress">0 / 0</span>
+            </div>
+
+            <div class="question-box">
+                <h3 id="question-word">Word</h3>
+                <p id="hint-text" class="hint"></p>
+            </div>
+
+            <div id="choice-container" class="choice-grid"></div>
+
+            <div id="input-container" style="display: none;">
+                <input type="text" id="answerInput" placeholder="정답 입력...">
+                <button onclick="checkSubjective()" class="submit-btn">확인 (Enter)</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

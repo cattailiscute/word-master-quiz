@@ -1,0 +1,76 @@
+/* 기본 초기화 */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Pretendard', sans-serif; }
+body { background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+.container {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h1, h2 { color: #333; margin-bottom: 1rem; }
+p { color: #666; margin-bottom: 1.5rem; }
+
+/* 입력창 스타일 */
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+input[type="text"]:focus { border-color: #4A90E2; }
+
+/* 버튼 공통 스타일 */
+button { cursor: pointer; border: none; transition: all 0.2s; }
+.main-btn, .submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4A90E2;
+    color: white;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.main-btn:hover, .submit-btn:hover { background-color: #357ABD; }
+
+/* Day 선택 그리드 */
+.day-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.day-btn {
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #495057;
+}
+.day-btn:hover { background-color: #dee2e6; transform: translateY(-2px); }
+
+/* 게임 화면 스타일 */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #ff4757;
+}
+.question-box { margin-bottom: 2rem; }
+#question-word { font-size: 2.5rem; color: #2f3542; margin-bottom: 0.5rem; }
+.hint { font-size: 0.9rem; color: #747d8c; }
+
+/* 객관식 버튼 그리드 */
+.choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.choice-btn {
+    padding: 15px;
+    background-color: #f1f2f6;
+    border: 1px solid #dfe4ea;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+.choice-btn:hover { background-color: #4A90E2; color: white; }
