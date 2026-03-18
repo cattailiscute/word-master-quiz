@@ -1,5 +1,5 @@
 body {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard', -apple-system, sans-serif;
     background-color: #f7f8fa;
     display: flex;
     justify-content: center;
@@ -46,10 +46,10 @@ body {
     color: #ff4b4b;
 }
 
-/* ★ 카드 매칭 그리드 설정 ★ */
+/* ★ 카드 매칭 그리드 설정 (중요) ★ */
 .card-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 2열 배치 */
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; /* 무조건 2열 배치 */
     gap: 12px;
     margin-top: 20px;
 }
@@ -58,23 +58,26 @@ body {
     background: #ffffff;
     border: 2px solid #e2e8f0;
     border-radius: 16px;
-    padding: 25px 10px;
+    padding: 20px 10px;
     cursor: pointer;
     font-weight: bold;
     font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 60px;
+    min-height: 70px; /* 클릭 영역 확보 */
     transition: all 0.2s;
     user-select: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
+
+.card:hover { border-color: #cbd5e0; }
 
 .card.selected {
     background: #ebf8ff;
     border-color: #3182ce;
     color: #3182ce;
-    transform: scale(1.02);
+    transform: translateY(-2px);
 }
 
 .card.matched {
@@ -95,7 +98,7 @@ body {
     75% { transform: translateX(5px); }
 }
 
-/* 공통 버튼 */
+/* 버튼 스타일 */
 .main-btn, .submit-btn {
     width: 100%;
     padding: 15px;
@@ -106,6 +109,7 @@ body {
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 0 #46a302;
+    margin-top: 10px;
 }
 
 .choice-grid {
