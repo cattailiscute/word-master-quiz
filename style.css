@@ -1,128 +1,28 @@
-body {
-    font-family: 'Pretendard', sans-serif;
-    background-color: #f7f8fa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-}
+body { font-family: 'Pretendard', sans-serif; background-color: #f7f8fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+.container { background: white; padding: 30px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: 90%; max-width: 400px; text-align: center; }
+.day-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; max-height: 350px; overflow-y: auto; }
+.day-btn { padding: 12px 5px; border: none; background: #edf2f7; border-radius: 12px; cursor: pointer; font-size: 0.85rem; }
+.game-header { display: flex; justify-content: space-between; margin-bottom: 25px; font-weight: bold; color: #ff4b4b; }
 
-.container {
-    background: white;
-    padding: 30px;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-}
-
-.day-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 20px;
-    max-height: 350px;
-    overflow-y: auto;
-}
-
-.day-btn {
-    padding: 12px 5px;
-    border: none;
-    background: #edf2f7;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 0.85rem;
-}
-
-.game-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 25px;
-    font-weight: bold;
-    color: #ff4b4b;
-}
-
-/* 카드 매칭 그리드 중요 설정 */
+/* 카드 그리드 정렬 수정 */
 .card-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 12px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
-
 .card {
-    background: #ffffff;
-    border: 2px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 20px 10px;
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 70px;
-    transition: all 0.2s;
-    user-select: none;
+    background: #ffffff; border: 2px solid #e2e8f0; border-radius: 16px;
+    padding: 20px 10px; cursor: pointer; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 70px; transition: all 0.2s; user-select: none;
 }
+.card.selected { background: #ebf8ff; border-color: #3182ce; color: #3182ce; }
+.card.matched { opacity: 0; pointer-events: none; transform: scale(0.8); }
+.card.wrong { background: #fff5f5; border-color: #e53e3e; animation: shake 0.3s; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-.card.selected {
-    background: #ebf8ff;
-    border-color: #3182ce;
-    color: #3182ce;
-}
-
-.card.matched {
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.8);
-}
-
-.card.wrong {
-    background: #fff5f5;
-    border-color: #e53e3e;
-    animation: shake 0.3s;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-.main-btn, .submit-btn {
-    width: 100%;
-    padding: 15px;
-    background: #58cc02;
-    color: white;
-    border: none;
-    border-radius: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 0 #46a302;
-}
-
-.choice-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-}
-
-.choice-btn {
-    padding: 16px;
-    border: 2px solid #e2e8f0;
-    background: white;
-    border-radius: 16px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 14px;
-    border: 2px solid #e2e8f0;
-    border-radius: 16px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-}
+.main-btn, .submit-btn { width: 100%; padding: 15px; background: #58cc02; color: white; border: none; border-radius: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #46a302; }
+.choice-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.choice-btn { padding: 16px; border: 2px solid #e2e8f0; background: white; border-radius: 16px; cursor: pointer; font-weight: 600; }
+input[type="text"] { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 16px; margin-bottom: 15px; box-sizing: border-box; }
