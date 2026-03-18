@@ -1,19 +1,18 @@
-/* 기본 스타일 */
 body {
     font-family: 'Pretendard', sans-serif;
-    background-color: #f0f2f5;
+    background-color: #f7f8fa;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
 }
 
 .container {
     background: white;
     padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     width: 90%;
     max-width: 400px;
     text-align: center;
@@ -25,61 +24,57 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     margin-top: 20px;
-    max-height: 400px;
+    max-height: 350px;
     overflow-y: auto;
 }
 
 .day-btn {
-    padding: 10px;
+    padding: 12px 5px;
     border: none;
-    background: #e9ecef;
-    border-radius: 8px;
+    background: #edf2f7;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
 }
 
-.day-btn:hover { background: #dee2e6; }
-
-/* 퀴즈 및 카드 공통 */
+/* 게임 헤더 */
 .game-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
-    color: #ff4b4b;
+    margin-bottom: 25px;
     font-weight: bold;
+    color: #ff4b4b;
 }
 
-/* 카드 매칭 그리드 (중요!) */
+/* ★ 카드 매칭 그리드 설정 ★ */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2열 배치 */
+    grid-template-columns: 1fr 1fr; /* 2열 배치 */
     gap: 12px;
     margin-top: 20px;
 }
 
 .card {
     background: #ffffff;
-    border: 2px solid #e0e0e0;
-    border-radius: 15px;
-    padding: 20px 10px;
-    text-align: center;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 25px 10px;
     cursor: pointer;
     font-weight: bold;
     font-size: 1rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 60px;
+    transition: all 0.2s;
     user-select: none;
 }
 
 .card.selected {
-    background: #e3f2fd;
-    border-color: #2196f3;
-    color: #2196f3;
-    transform: scale(1.05);
+    background: #ebf8ff;
+    border-color: #3182ce;
+    color: #3182ce;
+    transform: scale(1.02);
 }
 
 .card.matched {
@@ -89,8 +84,8 @@ body {
 }
 
 .card.wrong {
-    background: #ffebee;
-    border-color: #f44336;
+    background: #fff5f5;
+    border-color: #e53e3e;
     animation: shake 0.3s;
 }
 
@@ -100,38 +95,39 @@ body {
     75% { transform: translateX(5px); }
 }
 
-/* 기존 버튼 및 입력창 스타일 */
+/* 공통 버튼 */
 .main-btn, .submit-btn {
     width: 100%;
-    padding: 12px;
-    background: #4b7bec;
+    padding: 15px;
+    background: #58cc02;
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 16px;
+    font-weight: bold;
     cursor: pointer;
-    margin-top: 10px;
+    box-shadow: 0 4px 0 #46a302;
 }
 
 .choice-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 10px;
-    margin-top: 20px;
 }
 
 .choice-btn {
-    padding: 15px;
-    border: 1px solid #ddd;
+    padding: 16px;
+    border: 2px solid #e2e8f0;
     background: white;
-    border-radius: 10px;
+    border-radius: 16px;
     cursor: pointer;
+    font-weight: 600;
 }
 
 input[type="text"] {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    padding: 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    margin-bottom: 15px;
     box-sizing: border-box;
 }
