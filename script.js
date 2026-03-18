@@ -1,18 +1,17 @@
-
 let allWords = [];
 let filteredWords = [];
 let currentIndex = 0;
 let score = 0;
 let timerInterval;
-let timeLeft = 120; // 2분 설정
+let timeLeft = 120; // 2분
 let currentUser = "";
 let selectedCards = [];
+let wrongWords = []; // 오답 저장용
 
 async function loadData() {
     try {
         const response = await fetch('data.json');
         const jsonData = await response.json();
-        // 데이터 구조에 맞춰 키 선택
         allWords = jsonData["Word Master 중등 실력 (2022)_원본"] || Object.values(jsonData)[0];
         createDayButtons();
     } catch (e) { console.error("데이터 로드 실패:", e); }
@@ -37,6 +36,7 @@ function startStudy(dayNumber) {
 
     filteredWords.sort(() => Math.random() - 0.5);
     currentIndex = 0; score = 0; timeLeft = 120;
+    wrongWords = [];
     
     document.getElementById('menu-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
@@ -46,7 +46,7 @@ function startStudy(dayNumber) {
 }
 
 function showNextQuestion() {
-    const quizLimit = 10; // 10문제 후 카드 매칭
+    const quizLimit = 10;
     if (currentIndex >= quizLimit || currentIndex >= filteredWords.length) {
         startMatchingStage();
         return;
@@ -76,7 +76,15 @@ function setupMultipleChoice(data) {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
         btn.innerText = c;
-        btn.onclick = () => { if (c === data.meaning) score++; currentIndex++; showNextQuestion(); };
+        btn.onclick = () => { 
+            if (c === data.meaning) {
+                score++; 
+            } else {
+                addWrongWord(data);
+            }
+            currentIndex++; 
+            showNextQuestion(); 
+        };
         container.appendChild(btn);
     });
 }
@@ -93,8 +101,20 @@ function setupSubjective(data) {
 
 function checkSubjective() {
     const input = document.getElementById('answerInput');
-    if (input.value.trim().toLowerCase() === filteredWords[currentIndex].word.toLowerCase()) score++;
-    currentIndex++; showNextQuestion();
+    const data = filteredWords[currentIndex];
+    if (input.value.trim().toLowerCase() === data.word.toLowerCase()) {
+        score++;
+    } else {
+        addWrongWord(data);
+    }
+    currentIndex++; 
+    showNextQuestion();
+}
+
+function addWrongWord(data) {
+    if (!wrongWords.find(w => w.word === data.word)) {
+        wrongWords.push({ word: data.word, meaning: data.meaning });
+    }
 }
 
 function startMatchingStage() {
@@ -104,7 +124,6 @@ function startMatchingStage() {
     const grid = document.getElementById('card-grid');
     grid.innerHTML = '';
     
-    // 4쌍 추출 (총 8개 카드)
     const matchSet = filteredWords.slice(currentIndex, currentIndex + 4);
     let items = [];
     matchSet.forEach(d => { 
@@ -154,7 +173,13 @@ function startTimer() {
 
 function endGame() {
     clearInterval(timerInterval);
-    alert(`🎉 학습 종료!\n${currentUser}님의 최종 점수: ${score}점`);
+    let resultMsg = `🎉 학습 종료!\n${currentUser}님의 최종 점수: ${score}점\n\n`;
+    if (wrongWords.length > 0) {
+        resultMsg += `📝 [오답 리스트]\n` + wrongWords.map(w => `- ${w.word}: ${w.meaning}`).join('\n');
+    } else {
+        resultMsg += `👏 만점입니다! 완벽해요!`;
+    }
+    alert(resultMsg);
     location.reload();
 }
 
