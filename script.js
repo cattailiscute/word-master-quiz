@@ -9,9 +9,10 @@ let selectedCards = [];
 let wrongWords = [];
 let matchingStageCount = 0;
 
-// ✅ 3) 퀴즈 30문제 + 카드 매칭 5세트×4쌍×2점 = 30 + 40 = 총 70점 만점
+// 퀴즈 30문제 + 카드 매칭 2세트×4쌍×2점 = 30 + 16 = 총 46점 만점
+// (Day당 단어 30개이므로 매칭은 퀴즈 단어 재활용)
 const QUIZ_COUNT = 30;
-const MATCHING_SETS = 5;
+const MATCHING_SETS = 2;
 const TOTAL_MAX_SCORE = QUIZ_COUNT + MATCHING_SETS * 4 * 2;
 
 async function loadData() {
@@ -39,8 +40,8 @@ function startStudy(dayNum) {
     const dayTag = `Day ${dayNum < 10 ? '0' + dayNum : dayNum}`;
     filteredWords = allWords.filter(w => w.day === dayTag);
 
-    // ✅ 3) 30문제 + 매칭용 20단어 = 최소 50개 필요
-    if (filteredWords.length < 50) return alert("단어가 부족합니다.");
+    // Day당 30개 단어: 퀴즈 30문제 + 매칭은 앞 단어 재활용
+    if (filteredWords.length < 30) return alert("단어가 부족합니다.");
 
     filteredWords.sort(() => Math.random() - 0.5);
     currentIndex = 0; score = 0; timeLeft = 180; // ✅ 1) 3분
@@ -149,8 +150,10 @@ function startMatchingStage() {
     const grid = document.getElementById('card-grid');
     grid.innerHTML = '';
 
-    const start = QUIZ_COUNT + (matchingStageCount - 1) * 4;
-    const matchWords = filteredWords.slice(start, start + 4);
+    // 퀴즈에 쓴 단어(앞 30개) 중에서 랜덤 4개 재활용
+    const quizWords = filteredWords.slice(0, QUIZ_COUNT);
+    const shuffled = [...quizWords].sort(() => Math.random() - 0.5);
+    const matchWords = shuffled.slice(0, 4);
 
     if (matchWords.length < 2) { endGame(); return; }
 
