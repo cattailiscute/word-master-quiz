@@ -2,16 +2,17 @@ let allWords = [];
 let filteredWords = [];
 let currentIndex = 0;
 let score = 0;
-let timeLeft = 120;
+let timeLeft = 180; // ✅ 1) 3분(180초)으로 변경
 let timerInterval;
 let currentUser = "";
 let selectedCards = [];
 let wrongWords = [];
 let matchingStageCount = 0;
 
-// 퀴즈 10문제 + 카드 8쌍(16점) = 총 26점 만점
-const QUIZ_COUNT = 10;
-const TOTAL_MAX_SCORE = 26; 
+// ✅ 3) 퀴즈 30문제 + 카드 매칭 5세트×4쌍×2점 = 30 + 40 = 총 70점 만점
+const QUIZ_COUNT = 30;
+const MATCHING_SETS = 5;
+const TOTAL_MAX_SCORE = QUIZ_COUNT + MATCHING_SETS * 4 * 2;
 
 async function loadData() {
     try {
@@ -37,11 +38,12 @@ function createDayButtons() {
 function startStudy(dayNum) {
     const dayTag = `Day ${dayNum < 10 ? '0' + dayNum : dayNum}`;
     filteredWords = allWords.filter(w => w.day === dayTag);
-    
-    if (filteredWords.length < 18) return alert("단어가 부족합니다.");
+
+    // ✅ 3) 30문제 + 매칭용 20단어 = 최소 50개 필요
+    if (filteredWords.length < 50) return alert("단어가 부족합니다.");
 
     filteredWords.sort(() => Math.random() - 0.5);
-    currentIndex = 0; score = 0; timeLeft = 120;
+    currentIndex = 0; score = 0; timeLeft = 180; // ✅ 1) 3분
     wrongWords = []; matchingStageCount = 0;
 
     document.getElementById('menu-screen').style.display = 'none';
@@ -55,7 +57,6 @@ function updateHeader() {
     const m = Math.floor(timeLeft / 60);
     const s = timeLeft % 60;
     document.getElementById('timer').innerText = `시간: ${m}:${s < 10 ? '0'+s : s}`;
-    // 현재 점수를 만점 기준과 함께 표시
     document.getElementById('game-progress').innerText = `점수: ${score} / ${TOTAL_MAX_SCORE}`;
 }
 
@@ -102,14 +103,12 @@ function setupSubjective(data) {
     document.getElementById('choice-container').style.display = 'none';
     document.getElementById('input-container').style.display = 'block';
     document.getElementById('question-word').innerText = data.meaning;
-    
-    // ★ 공백이 포함된 경우 "(공백 포함)" 메시지 추가 로직
+
     const wordLen = data.word.length;
     const hasSpace = data.word.includes(" ");
     const hintSuffix = hasSpace ? ` (공백 포함)` : "";
-    
     document.getElementById('hint-text').innerText = `힌트: ${data.word[0]}... [${wordLen}자${hintSuffix}]`;
-    
+
     const input = document.getElementById('answerInput');
     input.value = ""; input.focus();
 }
@@ -118,9 +117,9 @@ function checkSubjective() {
     if (document.getElementById('input-container').style.display === 'none') return;
     const input = document.getElementById('answerInput');
     const data = filteredWords[currentIndex];
-    
-    // 공백 및 대소문자 무시 비교 (선생님 선택에 따라 trim만 남겨도 됩니다)
-    if (input.value.trim().toLowerCase() === data.word.toLowerCase()) {
+
+    // ✅ 4) 대소문자 구분 없이 비교 (trim + toLowerCase)
+    if (input.value.trim().toLowerCase() === data.word.trim().toLowerCase()) {
         score++;
     } else {
         recordWrong(data);
@@ -136,14 +135,21 @@ function recordWrong(data) {
 
 function startMatchingStage() {
     matchingStageCount++;
+
+    // ✅ 3) 5세트까지 매칭 진행
+    if (matchingStageCount > MATCHING_SETS) {
+        endGame();
+        return;
+    }
+
     document.getElementById('quiz-area').style.display = 'none';
     document.getElementById('matching-area').style.display = 'block';
-    document.getElementById('matching-title').innerText = `보너스 매칭 (${matchingStageCount}/2세트)`;
-    
+    document.getElementById('matching-title').innerText = `보너스 매칭 (${matchingStageCount}/${MATCHING_SETS}세트)`;
+
     const grid = document.getElementById('card-grid');
     grid.innerHTML = '';
-    
-    const start = 10 + (matchingStageCount - 1) * 4;
+
+    const start = QUIZ_COUNT + (matchingStageCount - 1) * 4;
     const matchWords = filteredWords.slice(start, start + 4);
 
     if (matchWords.length < 2) { endGame(); return; }
@@ -172,14 +178,14 @@ function handleMatch(card) {
     if (selectedCards.length === 2) {
         const [c1, c2] = selectedCards;
         if (c1.dataset.id === c2.dataset.id) {
-            c1.classList.add('matched'); c2.classList.add('matched'); 
-            score += 2; // 매칭 성공 시 2점 추가
+            c1.classList.add('matched'); c2.classList.add('matched');
+            score += 2;
             updateHeader();
-            
+
             setTimeout(() => {
                 const remaining = document.querySelectorAll('.card:not(.matched)');
                 if (remaining.length === 0) {
-                    if (matchingStageCount < 2) startMatchingStage();
+                    if (matchingStageCount < MATCHING_SETS) startMatchingStage();
                     else endGame();
                 }
             }, 500);
@@ -187,9 +193,9 @@ function handleMatch(card) {
             c1.classList.add('wrong'); c2.classList.add('wrong');
             const data = filteredWords.find(w => w.word === c1.dataset.id);
             if (data) recordWrong(data);
-            setTimeout(() => { 
-                c1.classList.remove('selected', 'wrong'); 
-                c2.classList.remove('selected', 'wrong'); 
+            setTimeout(() => {
+                c1.classList.remove('selected', 'wrong');
+                c2.classList.remove('selected', 'wrong');
             }, 500);
         }
         selectedCards = [];
@@ -209,11 +215,14 @@ function endGame() {
     clearInterval(timerInterval);
     const perf = Math.round((score / TOTAL_MAX_SCORE) * 100);
     let msg = `학습 종료! 최종 점수: ${score} / ${TOTAL_MAX_SCORE}점 (${perf}%)\n\n`;
-    
-    if (wrongWords.length > 0) {
+
+    // ✅ 2) 만점 판정을 score 기준으로 정확하게 수정
+    if (score >= TOTAL_MAX_SCORE) {
+        msg += `👏 완벽합니다! 만점입니다!`;
+    } else if (wrongWords.length > 0) {
         msg += `📝 [오답 리스트]\n` + wrongWords.map(w => `- ${w.word}: ${w.meaning}`).join('\n');
     } else {
-        msg += `👏 완벽합니다! 만점입니다!`;
+        msg += `👏 오답은 없지만 아직 도전할 문제가 남아있어요!`;
     }
     alert(msg);
     location.reload();
