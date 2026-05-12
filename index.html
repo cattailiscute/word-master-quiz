@@ -3,47 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>영단어 마스터</title>
+    <title>WordMaster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <section id="login-screen">
-            <h1>🦉 영단어 퀴즈</h1>
-            <input type="text" id="userNameInput" placeholder="이름을 입력하세요" autofocus>
-            <button onclick="saveUser()" class="main-btn">시작하기</button>
-        </section>
 
-        <section id="menu-screen" style="display: none;">
-            <h2 id="welcome-msg"></h2>
-            <p>Day를 선택하세요:</p>
+    <!-- 로그인 화면 -->
+    <div id="login-screen" class="screen active">
+        <div class="bg-orb orb1"></div>
+        <div class="bg-orb orb2"></div>
+        <div class="login-card">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">WordMaster</span>
+            </div>
+            <p class="login-sub">영단어 퀴즈 · 중등 실력</p>
+            <div class="input-wrap">
+                <input type="text" id="userNameInput" placeholder="이름을 입력하세요" autofocus>
+            </div>
+            <button onclick="saveUser()" class="btn-primary">시작하기 →</button>
+        </div>
+    </div>
+
+    <!-- 메뉴 화면 -->
+    <div id="menu-screen" class="screen">
+        <div class="bg-orb orb1"></div>
+        <div class="bg-orb orb2"></div>
+        <div class="menu-wrap">
+            <div class="menu-header">
+                <div class="logo small">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">WordMaster</span>
+                </div>
+                <p id="welcome-msg" class="welcome"></p>
+            </div>
+            <p class="day-label">DAY 선택</p>
             <div id="day-grid" class="day-grid"></div>
-        </section>
+        </div>
+    </div>
 
-        <section id="game-screen" style="display: none;">
-            <div class="game-header">
-                <span id="timer">시간: 2:00</span>
-                <span id="game-progress">0 / 10</span>
+    <!-- 게임 화면 -->
+    <div id="game-screen" class="screen">
+        <div class="game-wrap">
+            <div class="hud">
+                <div class="hud-timer">
+                    <span class="hud-icon">⏱</span>
+                    <span id="timer-text">3:00</span>
+                </div>
+                <div class="hud-progress">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="progress-label" id="progress-label">0 / 30</span>
+                </div>
+                <div class="hud-score">
+                    <span class="hud-icon">✦</span>
+                    <span id="score-text">0</span>
+                </div>
             </div>
 
             <div id="quiz-area">
-                <div class="question-box">
+                <div class="stage-badge" id="stage-badge">객관식</div>
+                <div class="question-card">
                     <h2 id="question-word">Word</h2>
-                    <p id="hint-text" style="color: #aaa; min-height: 1.2em;"></p>
+                    <p id="hint-text"></p>
                 </div>
                 <div id="choice-container" class="choice-grid"></div>
-                <div id="input-container" style="display: none;">
-                    <input type="text" id="answerInput" placeholder="정답을 입력하세요">
-                    <button id="submit-btn" class="submit-btn">확인 (Enter)</button>
+                <div id="input-container" style="display:none;">
+                    <input type="text" id="answerInput" placeholder="정답 입력 후 Enter">
+                    <button id="submit-btn" class="btn-submit">확인</button>
                 </div>
             </div>
 
-            <div id="matching-area" style="display: none;">
-                <h3 id="matching-title">보너스 매칭</h3>
+            <div id="matching-area" style="display:none;">
+                <div class="stage-badge match-badge">보너스 매칭</div>
+                <p class="match-sub" id="matching-title">세트 1 / 2</p>
                 <div id="card-grid" class="card-grid"></div>
             </div>
-        </section>
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- 결과 오버레이 -->
+    <div id="result-overlay" class="result-overlay" style="display:none;">
+        <div class="result-card">
+            <div class="result-emoji" id="result-emoji">🎉</div>
+            <h2 class="result-title" id="result-title">학습 완료!</h2>
+            <div class="result-score-wrap">
+                <span class="result-score" id="result-score">0</span>
+                <span class="result-max" id="result-max">/ 46</span>
+            </div>
+            <div class="result-percent" id="result-percent">0%</div>
+            <div id="wrong-list-wrap" class="wrong-list-wrap"></div>
+            <button onclick="location.reload()" class="btn-primary">다시 시작 →</button>
+        </div>
+    </div>
+
+    <script src="script.js?v=3"></script>
 </body>
 </html>
