@@ -2,7 +2,7 @@ let allWords = [];
 let filteredWords = [];
 let currentIndex = 0;
 let score = 0;
-let timeLeft = 180;       // ✅ 3분
+let timeLeft = 210;       // ✅ 3분
 let timerInterval;
 let currentUser = "";
 let selectedCards = [];
