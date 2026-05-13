@@ -10,123 +10,102 @@
 :root{
   --bg:#0d0f14;--surface:#161a24;--surface2:#1e2333;
   --border:rgba(255,255,255,0.08);
-  --accent:#7fffb2;--accent2:#5b8fff;--danger:#ff5f7e;
+  --accent:#7fffb2;--accent2:#5b8fff;--danger:#ff5f7e;--gold:#ffd166;
   --text:#f0f2f8;--muted:#6b7280;--sub:#9ca3af;
   --r:18px;--r-sm:12px;
 }
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 
-/* ── SCREENS ── */
 .screen{display:none;min-height:100vh;position:relative;align-items:center;justify-content:center;flex-direction:column}
 .screen.on{display:flex}
 
-/* ── ORBS ── */
 .orb{position:fixed;border-radius:50%;filter:blur(90px);opacity:.15;pointer-events:none;z-index:0}
 .orb1{width:420px;height:420px;background:var(--accent);top:-120px;left:-120px;animation:drift 9s ease-in-out infinite alternate}
 .orb2{width:360px;height:360px;background:var(--accent2);bottom:-100px;right:-100px;animation:drift 11s ease-in-out infinite alternate-reverse}
 @keyframes drift{to{transform:translate(40px,40px)}}
 
-/* ── CARD BASE ── */
-.card-box{
-  position:relative;z-index:1;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--r);
-  box-shadow:0 24px 60px rgba(0,0,0,.55);
-  animation:up .55s cubic-bezier(.16,1,.3,1) both;
-}
 @keyframes up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
 
-/* ── LOGO ── */
 .logo{display:flex;align-items:center;gap:10px;justify-content:center}
 .logo-icon{font-size:1.7rem;filter:drop-shadow(0 0 10px var(--accent))}
 .logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:1.65rem;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  letter-spacing:-.02em}
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.02em}
 .logo.sm .logo-text{font-size:1.15rem}.logo.sm .logo-icon{font-size:1.15rem}
 
-/* ── INPUTS ── */
-input[type=text]{
-  width:100%;padding:13px 16px;
-  background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:var(--r-sm);color:var(--text);font-size:.95rem;
-  font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color .2s;
-}
+input[type=text]{width:100%;padding:13px 16px;background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:var(--r-sm);color:var(--text);font-size:.95rem;font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color .2s}
 input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,255,178,.1)}
 
-/* ── BUTTONS ── */
 .btn{width:100%;padding:14px;border:none;border-radius:var(--r-sm);
-  font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;
-  cursor:pointer;transition:all .2s;letter-spacing:.02em}
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .2s;letter-spacing:.02em}
 .btn-green{background:var(--accent);color:#0d0f14;box-shadow:0 4px 18px rgba(127,255,178,.25)}
 .btn-green:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(127,255,178,.35)}
-.btn-green:active{transform:none}
+.btn-ghost{background:transparent;color:var(--sub);border:1.5px solid var(--border)}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent2)}
+.btn-gold{background:var(--gold);color:#0d0f14;box-shadow:0 4px 18px rgba(255,209,102,.25)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,209,102,.35)}
 
-/* ════════════════════════════════
-   LOGIN
-════════════════════════════════ */
-#login .card-box{padding:48px 38px;width:90%;max-width:390px;text-align:center;gap:0}
-#login .sub{color:var(--muted);font-size:.82rem;margin:6px 0 28px;letter-spacing:.05em}
-#login input{margin-bottom:14px}
+/* ── LOGIN ── */
+#login{justify-content:center}
+.login-box{position:relative;z-index:1;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);box-shadow:0 24px 60px rgba(0,0,0,.55);
+  padding:48px 38px;width:90%;max-width:390px;text-align:center;
+  animation:up .55s cubic-bezier(.16,1,.3,1) both;display:flex;flex-direction:column;gap:0}
+.login-sub{color:var(--muted);font-size:.82rem;margin:6px 0 28px;letter-spacing:.05em}
+.login-box input{margin-bottom:14px}
 
-/* ════════════════════════════════
-   MENU
-════════════════════════════════ */
+/* ── MENU ── */
 #menu{align-items:flex-start;justify-content:center}
 .menu-inner{position:relative;z-index:1;width:90%;max-width:520px;padding:36px 0 60px}
-.menu-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.menu-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
 .welcome{color:var(--sub);font-size:.88rem}
+.menu-btns{display:flex;gap:10px;margin-bottom:28px}
+.menu-btns .btn{padding:11px 14px;font-size:.8rem}
 .day-label{font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;
   letter-spacing:.15em;color:var(--muted);margin-bottom:14px}
-.day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;
-  max-height:58vh;overflow-y:auto;padding-right:2px}
+.day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;max-height:55vh;overflow-y:auto;padding-right:2px}
 .day-grid::-webkit-scrollbar{width:3px}
 .day-grid::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 .day-btn{padding:13px 4px;background:var(--surface);border:1.5px solid var(--border);
   border-radius:var(--r-sm);color:var(--sub);font-size:.78rem;
-  font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;transition:all .18s}
-.day-btn:hover{border-color:var(--accent);color:var(--accent);
-  background:rgba(127,255,178,.05);transform:translateY(-2px)}
+  font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;transition:all .18s;position:relative}
+.day-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(127,255,178,.05);transform:translateY(-2px)}
+.day-btn.has-record{border-color:rgba(255,209,102,.35);color:var(--gold)}
+.day-btn .record-dot{position:absolute;top:5px;right:6px;width:5px;height:5px;
+  border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold)}
 
-/* ════════════════════════════════
-   GAME
-════════════════════════════════ */
+/* ── GAME ── */
 #game{align-items:flex-start;justify-content:center}
 .game-inner{position:relative;z-index:1;width:90%;max-width:480px;padding:28px 0 60px}
 
-/* HUD */
-.hud{display:flex;align-items:center;gap:10px;
-  background:var(--surface);border:1px solid var(--border);
+.hud{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);
   border-radius:50px;padding:9px 16px;margin-bottom:22px}
-.hud-timer,.hud-score{
-  display:flex;align-items:center;gap:4px;white-space:nowrap;
+.hud-timer,.hud-score{display:flex;align-items:center;gap:4px;white-space:nowrap;
   font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem}
 .hud-timer{color:var(--danger);min-width:55px}
 .hud-score{color:var(--accent);min-width:38px}
 .hud-mid{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
 .pbar-bg{width:100%;height:4px;background:var(--surface2);border-radius:10px;overflow:hidden}
-.pbar-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));
-  border-radius:10px;width:0%;transition:width .4s ease}
+.pbar-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:10px;width:0%;transition:width .4s ease}
 .pbar-label{font-size:.67rem;color:var(--muted);font-family:'Syne',sans-serif}
 .warn{animation:blink .7s ease infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
 
-/* Stage badge */
 .badge{display:inline-block;padding:3px 13px;border-radius:50px;
-  font-size:.7rem;font-family:'Syne',sans-serif;font-weight:700;letter-spacing:.07em;
-  margin-bottom:14px}
+  font-size:.7rem;font-family:'Syne',sans-serif;font-weight:700;letter-spacing:.07em;margin-bottom:14px}
 .badge-obj{background:rgba(91,143,255,.14);color:var(--accent2);border:1px solid rgba(91,143,255,.28)}
 .badge-sub{background:rgba(255,95,126,.12);color:var(--danger);border:1px solid rgba(255,95,126,.25)}
 .badge-match{background:rgba(127,255,178,.1);color:var(--accent);border:1px solid rgba(127,255,178,.22)}
 
-/* Question */
 .q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
   padding:32px 24px;text-align:center;margin-bottom:18px;min-height:120px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
 #qword{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
 #hint{font-size:.82rem;color:var(--muted)}
 
-/* Choices */
 .choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .c-btn{padding:16px 10px;background:var(--surface);border:1.5px solid var(--border);
   border-radius:var(--r-sm);color:var(--text);font-size:.88rem;
@@ -134,15 +113,12 @@ input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,
 .c-btn:hover{border-color:var(--accent2);color:var(--accent2);background:rgba(91,143,255,.06)}
 .c-btn:active{transform:scale(.97)}
 
-/* Subjective */
-.sub-row{display:flex;gap:9px;align-items:center}
+.sub-row{display:flex;gap:9px;align-items:center;margin-top:4px}
 .sub-row input{flex:1;margin:0}
 .btn-ok{padding:13px 18px;background:var(--accent);color:#0d0f14;border:none;
-  border-radius:var(--r-sm);font-weight:700;font-family:'Syne',sans-serif;
-  cursor:pointer;white-space:nowrap;transition:opacity .2s}
+  border-radius:var(--r-sm);font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity .2s}
 .btn-ok:hover{opacity:.82}
 
-/* Matching */
 .match-sub{font-size:.82rem;color:var(--muted);margin-bottom:18px;font-family:'Syne',sans-serif}
 .m-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
 .m-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-sm);
@@ -153,33 +129,82 @@ input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,
 .m-card.sel{border-color:var(--accent2);background:rgba(91,143,255,.12);color:var(--accent2)}
 .m-card.hit{opacity:0;pointer-events:none;transform:scale(.82);transition:all .35s}
 .m-card.miss{border-color:var(--danger);background:rgba(255,95,126,.08);animation:shake .3s}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
-/* ════════════════════════════════
-   RESULT OVERLAY
-════════════════════════════════ */
-#result{position:fixed;inset:0;background:rgba(13,15,20,.92);
-  backdrop-filter:blur(14px);z-index:200;
-  display:none;align-items:center;justify-content:center}
+/* ── RESULT OVERLAY ── */
+#result{position:fixed;inset:0;background:rgba(13,15,20,.92);backdrop-filter:blur(14px);
+  z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 #result.on{display:flex}
 .res-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
-  padding:44px 34px;width:90%;max-width:390px;text-align:center;
-  animation:up .5s cubic-bezier(.16,1,.3,1) both}
-.res-emoji{font-size:2.8rem;margin-bottom:10px}
-.res-title{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;margin-bottom:22px}
-.res-scores{display:flex;align-items:baseline;justify-content:center;gap:5px;margin-bottom:4px}
-.res-score{font-family:'Syne',sans-serif;font-size:3.2rem;font-weight:800;
+  padding:36px 30px;width:100%;max-width:390px;text-align:center;
+  animation:up .5s cubic-bezier(.16,1,.3,1) both;display:flex;flex-direction:column;gap:0}
+.res-emoji{font-size:2.8rem;margin-bottom:8px}
+.res-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:18px}
+.res-scores{display:flex;align-items:baseline;justify-content:center;gap:5px;margin-bottom:3px}
+.res-score{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .res-max{font-size:1.1rem;color:var(--muted);font-family:'Syne',sans-serif}
-.res-pct{font-size:.95rem;color:var(--muted);margin-bottom:24px;font-family:'Syne',sans-serif}
+.res-pct{font-size:.9rem;color:var(--muted);margin-bottom:8px;font-family:'Syne',sans-serif}
+.new-record-badge{display:inline-block;background:linear-gradient(135deg,var(--gold),#ffaa00);
+  color:#0d0f14;font-family:'Syne',sans-serif;font-weight:800;font-size:.75rem;
+  padding:4px 14px;border-radius:50px;margin-bottom:16px;letter-spacing:.05em;
+  animation:pop .4s ease}
 .wrong-box{background:var(--surface2);border-radius:var(--r-sm);padding:14px;
-  margin-bottom:22px;max-height:190px;overflow-y:auto;text-align:left}
-.w-item{display:flex;justify-content:space-between;padding:5px 0;
-  border-bottom:1px solid var(--border);font-size:.83rem}
+  margin-bottom:16px;max-height:140px;overflow-y:auto;text-align:left}
+.w-item{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:.82rem}
 .w-item:last-child{border:none}
 .w-word{font-weight:700;color:var(--danger);font-family:'Syne',sans-serif}
 .w-mean{color:var(--sub)}
+.res-actions{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.btn-share{background:var(--surface2);color:var(--text);border:1.5px solid var(--border);
+  width:100%;padding:13px;border-radius:var(--r-sm);font-family:'Syne',sans-serif;
+  font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;letter-spacing:.02em}
+.btn-share:hover{border-color:var(--accent2);color:var(--accent2)}
+.btn-share.copied{border-color:var(--accent);color:var(--accent)}
+
+/* ── HALL OF FAME OVERLAY ── */
+#hof{position:fixed;inset:0;background:rgba(13,15,20,.95);backdrop-filter:blur(14px);
+  z-index:300;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px 0 60px}
+#hof.on{display:flex}
+.hof-inner{position:relative;z-index:1;width:90%;max-width:520px}
+.hof-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-top:8px}
+.hof-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;
+  display:flex;align-items:center;gap:10px}
+.hof-title span{background:linear-gradient(135deg,var(--gold),#ffaa00);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hof-close{background:var(--surface2);border:1px solid var(--border);color:var(--sub);
+  border-radius:50%;width:36px;height:36px;font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .2s}
+.hof-close:hover{border-color:var(--danger);color:var(--danger)}
+.hof-empty{text-align:center;color:var(--muted);padding:60px 0;font-size:.9rem}
+.hof-day-group{margin-bottom:12px}
+.hof-day-head{font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;
+  letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
+.hof-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);
+  padding:14px 18px;display:flex;align-items:center;gap:14px;transition:all .2s}
+.hof-row:hover{border-color:rgba(255,209,102,.3)}
+.hof-rank{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;min-width:28px;text-align:center}
+.rank-1{color:var(--gold)}.rank-2{color:#c0c0c0}.rank-3{color:#cd7f32}.rank-n{color:var(--muted)}
+.hof-info{flex:1}
+.hof-name{font-weight:700;font-size:.95rem;margin-bottom:2px}
+.hof-meta{font-size:.75rem;color:var(--muted);font-family:'Syne',sans-serif}
+.hof-score-wrap{text-align:right}
+.hof-score{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--accent)}
+.hof-pct{font-size:.72rem;color:var(--muted);font-family:'Syne',sans-serif}
+.hof-clear-btn{background:transparent;border:1px solid var(--border);color:var(--muted);
+  border-radius:var(--r-sm);padding:8px 16px;font-size:.78rem;cursor:pointer;
+  font-family:'Syne',sans-serif;margin-top:20px;width:100%;transition:all .2s}
+.hof-clear-btn:hover{border-color:var(--danger);color:var(--danger)}
+
+/* ── NEW RECORD TOAST ── */
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);
+  background:var(--gold);color:#0d0f14;font-family:'Syne',sans-serif;font-weight:800;
+  padding:10px 24px;border-radius:50px;font-size:.88rem;z-index:500;
+  animation:toastIn .3s ease both;pointer-events:none}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 </style>
 </head>
 <body>
@@ -187,10 +212,10 @@ input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,
 <!-- ── LOGIN ── -->
 <div id="login" class="screen on">
   <div class="orb orb1"></div><div class="orb orb2"></div>
-  <div class="card-box" style="padding:48px 38px;width:90%;max-width:390px;text-align:center">
+  <div class="login-box">
     <div class="logo"><span class="logo-icon">⚡</span><span class="logo-text">WordMaster</span></div>
-    <p class="sub" style="color:var(--muted);font-size:.82rem;margin:6px 0 28px;letter-spacing:.05em">영단어 퀴즈 · 중등 실력</p>
-    <input type="text" id="nameInput" placeholder="이름을 입력하세요" style="margin-bottom:14px" autofocus>
+    <p class="login-sub">영단어 퀴즈 · 중등 실력</p>
+    <input type="text" id="nameInput" placeholder="이름을 입력하세요" autofocus>
     <button class="btn btn-green" onclick="saveUser()">시작하기 →</button>
   </div>
 </div>
@@ -203,6 +228,9 @@ input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,
       <div class="logo sm"><span class="logo-icon">⚡</span><span class="logo-text">WordMaster</span></div>
       <span class="welcome" id="welcome"></span>
     </div>
+    <div class="menu-btns">
+      <button class="btn btn-gold" onclick="openHOF()" style="padding:11px 14px;font-size:.85rem">🏆 명예의 전당</button>
+    </div>
     <p class="day-label">DAY 선택</p>
     <div class="day-grid" id="dayGrid"></div>
   </div>
@@ -212,8 +240,6 @@ input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,
 <div id="game" class="screen">
   <div class="orb orb1"></div><div class="orb orb2"></div>
   <div class="game-inner">
-
-    <!-- HUD -->
     <div class="hud">
       <div class="hud-timer"><span>⏱</span><span id="timerTxt">3:00</span></div>
       <div class="hud-mid">
@@ -222,8 +248,6 @@ input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,
       </div>
       <div class="hud-score"><span>✦</span><span id="scoreTxt">0</span></div>
     </div>
-
-    <!-- Quiz -->
     <div id="quizArea">
       <span class="badge badge-obj" id="stageBadge">객관식</span>
       <div class="q-card">
@@ -231,13 +255,11 @@ input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,
         <div id="hint"></div>
       </div>
       <div class="choice-grid" id="choiceBox"></div>
-      <div class="sub-row" id="subBox" style="display:none;margin-top:4px">
+      <div class="sub-row" id="subBox" style="display:none">
         <input type="text" id="ansInput" placeholder="정답 입력 후 Enter">
         <button class="btn-ok" id="okBtn">확인</button>
       </div>
     </div>
-
-    <!-- Matching -->
     <div id="matchArea" style="display:none">
       <span class="badge badge-match">보너스 매칭</span>
       <p class="match-sub" id="matchTitle">세트 1 / 2</p>
@@ -256,36 +278,172 @@ input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,
       <span class="res-max" id="resMax">/ 46</span>
     </div>
     <div class="res-pct" id="resPct">0%</div>
+    <div id="newRecordBadge" style="display:none"><span class="new-record-badge">🏆 신기록!</span></div>
     <div class="wrong-box" id="wrongBox" style="display:none"></div>
-    <button class="btn btn-green" onclick="location.reload()">다시 시작 →</button>
+    <div class="res-actions">
+      <button class="btn-share" id="shareBtn" onclick="copyShareLink()">🔗 점수 공유 링크 복사</button>
+      <button class="btn btn-green" onclick="location.reload()">다시 시작 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── HALL OF FAME ── -->
+<div id="hof">
+  <div class="hof-inner">
+    <div class="hof-header">
+      <div class="hof-title">🏆 <span>명예의 전당</span></div>
+      <button class="hof-close" onclick="closeHOF()">✕</button>
+    </div>
+    <div id="hofContent"></div>
+    <button class="hof-clear-btn" onclick="clearHOF()">기록 전체 삭제</button>
   </div>
 </div>
 
 <script>
-let allWords=[], filtered=[], idx=0, score=0, timeLeft=180, timer, user="";
-let selCards=[], wrongWords=[], matchSet=0;
+// ── 상수 ──
 const QUIZ=30, MSETS=2, MAX=QUIZ+MSETS*4*2; // 46점
+const HOF_KEY='wordmaster_hof_v1';
 
+// ── 상태 ──
+let allWords=[], filtered=[], idx=0, score=0, timeLeft=180, timer, user='';
+let selCards=[], wrongWords=[], matchSet=0, currentDay=0;
+
+// ── 데이터 로드 ──
 async function loadData(){
   try{
     const r=await fetch('data.json');
     const d=await r.json();
     allWords=d["Word Master 중등 실력 (2022)_원본"]||Object.values(d)[0];
+    checkSharedScore(); // URL 파라미터로 공유된 점수 확인
     buildDays();
   }catch(e){console.error(e)}
 }
 
+// ── HOF 저장소 ──
+function getHOF(){
+  try{ return JSON.parse(localStorage.getItem(HOF_KEY)||'{}'); }
+  catch(e){ return {}; }
+}
+function saveHOF(data){ localStorage.setItem(HOF_KEY, JSON.stringify(data)); }
+
+// Day별 최고 점수 등록 (상위 3명)
+function registerScore(dayNum, name, score, pct){
+  const hof=getHOF();
+  const key=`Day${dayNum<10?'0'+dayNum:dayNum}`;
+  if(!hof[key]) hof[key]=[];
+  hof[key].push({name, score, pct, date:new Date().toLocaleDateString('ko-KR')});
+  // 점수 내림차순 정렬, 동점이면 이름 가나다순, 상위 10명만 보관
+  hof[key].sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
+  hof[key]=hof[key].slice(0,10);
+  saveHOF(hof);
+  // 신기록 여부: 1등인지 확인
+  return hof[key][0].name===name && hof[key][0].score===score;
+}
+
+// URL 파라미터로 공유 점수 자동 등록
+function checkSharedScore(){
+  const p=new URLSearchParams(location.search);
+  const sn=p.get('sn'), sd=p.get('sd'), ss=p.get('ss'), sp=p.get('sp');
+  if(!sn||!sd||!ss) return;
+  const dayNum=parseInt(sd), sc=parseInt(ss), pct=parseInt(sp||'0');
+  if(isNaN(dayNum)||isNaN(sc)) return;
+  registerScore(dayNum, decodeURIComponent(sn), sc, pct);
+  // URL 파라미터 제거
+  history.replaceState({},'',location.pathname);
+  showToast(`${decodeURIComponent(sn)}님의 점수가 등록됐어요!`);
+}
+
+// ── 공유 링크 ──
+function copyShareLink(){
+  const tag=`Day${currentDay<10?'0'+currentDay:currentDay}`;
+  const pct=Math.round(score/MAX*100);
+  const params=new URLSearchParams({
+    sn: encodeURIComponent(user),
+    sd: currentDay,
+    ss: score,
+    sp: pct
+  });
+  const url=`${location.origin}${location.pathname}?${params}`;
+  navigator.clipboard.writeText(url).then(()=>{
+    const btn=document.getElementById('shareBtn');
+    btn.textContent='✅ 링크 복사 완료!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='🔗 점수 공유 링크 복사';btn.classList.remove('copied')},2000);
+  }).catch(()=>{
+    prompt('아래 링크를 복사하세요:', url);
+  });
+}
+
+// ── 명예의 전당 UI ──
+function openHOF(){
+  renderHOF();
+  document.getElementById('hof').classList.add('on');
+}
+function closeHOF(){
+  document.getElementById('hof').classList.remove('on');
+}
+function clearHOF(){
+  if(!confirm('모든 기록을 삭제할까요?')) return;
+  localStorage.removeItem(HOF_KEY);
+  renderHOF();
+  buildDays();
+}
+
+function renderHOF(){
+  const hof=getHOF();
+  const content=document.getElementById('hofContent');
+  const keys=Object.keys(hof).sort();
+  if(!keys.length){
+    content.innerHTML='<div class="hof-empty">아직 등록된 기록이 없어요.<br>퀴즈를 완료하고 점수를 공유해보세요! 🎯</div>';
+    return;
+  }
+  content.innerHTML=keys.map(key=>{
+    const rows=hof[key];
+    const rankEmoji=['🥇','🥈','🥉'];
+    const rankClass=['rank-1','rank-2','rank-3'];
+    return `<div class="hof-day-group">
+      <div class="hof-day-head">${key.replace('Day','Day ')}</div>
+      ${rows.map((r,i)=>`
+        <div class="hof-row">
+          <div class="hof-rank ${rankClass[i]||'rank-n'}">${rankEmoji[i]||i+1}</div>
+          <div class="hof-info">
+            <div class="hof-name">${r.name}</div>
+            <div class="hof-meta">${r.date}</div>
+          </div>
+          <div class="hof-score-wrap">
+            <div class="hof-score">${r.score}<span style="font-size:.7rem;color:var(--muted)"> / ${MAX}</span></div>
+            <div class="hof-pct">${r.pct}%</div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+// ── 토스트 ──
+function showToast(msg){
+  const t=document.createElement('div');
+  t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+}
+
+// ── Day 버튼 (기록 있으면 강조) ──
 function buildDays(){
   const g=document.getElementById('dayGrid');
+  g.innerHTML='';
+  const hof=getHOF();
   for(let i=1;i<=40;i++){
+    const key=`Day${i<10?'0'+i:i}`;
+    const hasRec=!!(hof[key]&&hof[key].length);
     const b=document.createElement('button');
-    b.className='day-btn';
-    b.textContent=`Day ${i<10?'0'+i:i}`;
+    b.className='day-btn'+(hasRec?' has-record':'');
+    b.innerHTML=`Day ${i<10?'0'+i:i}${hasRec?'<span class="record-dot"></span>':''}`;
     b.onclick=()=>startGame(i);
     g.appendChild(b);
   }
 }
 
+// ── 화면 전환 ──
 function go(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
   document.getElementById(id).classList.add('on');
@@ -299,12 +457,13 @@ function saveUser(){
   go('menu');
 }
 
+// ── 게임 시작 ──
 function startGame(day){
   const tag=`Day ${day<10?'0'+day:day}`;
   filtered=allWords.filter(w=>w.day===tag);
   if(filtered.length<10)return alert('단어가 부족합니다.');
   filtered.sort(()=>Math.random()-.5);
-  idx=0;score=0;timeLeft=180;wrongWords=[];matchSet=0;
+  idx=0;score=0;timeLeft=180;wrongWords=[];matchSet=0;currentDay=day;
   go('game');
   updateHUD();
   startTimer();
@@ -415,6 +574,8 @@ function startTimer(){
 function endGame(){
   clearInterval(timer);
   const pct=Math.round(score/MAX*100);
+
+  // 결과 표시
   document.getElementById('resScore').textContent=score;
   document.getElementById('resMax').textContent=`/ ${MAX}`;
   document.getElementById('resPct').textContent=pct+'%';
@@ -423,6 +584,13 @@ function endGame(){
   else if(pct>=80){em.textContent='🎉';ti.textContent='훌륭해요!'}
   else if(pct>=50){em.textContent='💪';ti.textContent='잘했어요!'}
   else{em.textContent='📚';ti.textContent='다시 도전해봐요!'}
+
+  // HOF 등록 및 신기록 확인
+  const isTop=registerScore(currentDay, user, score, pct);
+  document.getElementById('newRecordBadge').style.display=isTop?'block':'none';
+  buildDays(); // 점 업데이트
+
+  // 오답
   const wb=document.getElementById('wrongBox');
   wb.innerHTML='';
   if(wrongWords.length){
@@ -433,6 +601,7 @@ function endGame(){
       wb.appendChild(d);
     });
   }else wb.style.display='none';
+
   document.getElementById('result').classList.add('on');
 }
 
